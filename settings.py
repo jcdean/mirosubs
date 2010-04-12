@@ -23,7 +23,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+     #('your_name', 'your_email@domain.com'),
 )
 
 MANAGERS = ADMINS
@@ -152,7 +152,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'videos',
     'widget',
-    'auth'
+    'auth',
+    'south',
 )
 
 AUTH_PROFILE_MODULE = 'profiles.Profile'
