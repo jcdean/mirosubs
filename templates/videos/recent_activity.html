@@ -1,0 +1,9 @@
+{% for recent_video in most_recent|slice:":10" %}
+    {% ifequal recent_video.video.video_type "Y" %}
+	<a href="{% url videos:video video_id=recent_video.video.video_id %}">{{ recent_video.video.youtube_videoid }}</a>
+    {% endifequal %}
+    {% ifequal recent_video.video.video_type "H" %}
+	<a href="{% url videos:video video_id=recent_video.video.video_id %}">{{ recent_video.video.video_url }}</a>
+    {% endifequal %}
+    <br/>
+{% endfor %}
