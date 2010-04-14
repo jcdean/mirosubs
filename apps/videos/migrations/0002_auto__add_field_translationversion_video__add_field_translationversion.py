@@ -9,13 +9,19 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'TranslationVersion.video'
-        db.add_column('videos_translationversion', 'video', self.gf('django.db.models.fields.related.ForeignKey')(default=datetime.date(2010, 4, 13), to=orm['videos.Video']), keep_default=False)
+        db.add_column('videos_translationversion', 'video', self.gf('django.db.models.fields.related.ForeignKey')(default=datetime.date(2010, 4, 14), to=orm['videos.Video']), keep_default=False)
+
+        # Adding field 'TranslationVersion.datetime_started'
+        db.add_column('videos_translationversion', 'datetime_started', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, default=datetime.date(2010, 4, 14), blank=True), keep_default=False)
     
     
     def backwards(self, orm):
         
         # Deleting field 'TranslationVersion.video'
         db.delete_column('videos_translationversion', 'video_id')
+
+        # Deleting field 'TranslationVersion.datetime_started'
+        db.delete_column('videos_translationversion', 'datetime_started')
     
     
     models = {

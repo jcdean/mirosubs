@@ -91,8 +91,8 @@ def video_list(request):
 def recent_activity(request, template_name='index.html'):
 	DATE_ADDED_DESCENDING = '-datetime_started'
 
-	vidcaps = list(VideoCaptionVersion.objects.all().order_by(DATE_ADDED_DESCENDING))
-	trans = list(TranslationVersion.objects.all().order_by(DATE_ADDED_DESCENDING))
+	vidcaps = list(VideoCaptionVersion.objects.all().order_by(DATE_ADDED_DESCENDING)[:10])
+	trans = list(TranslationVersion.objects.all().order_by(DATE_ADDED_DESCENDING)[:10])
 
 	most_recent = sorted(vidcaps + trans, key=lambda x: x.datetime_started, reverse=True)  # in descending order
 

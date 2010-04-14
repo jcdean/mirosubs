@@ -67,12 +67,11 @@ class Migration(SchemaMigration):
 
         # Adding model 'TranslationVersion'
         db.create_table('videos_translationversion', (
-            ('language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['videos.TranslationLanguage'])),
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('version_no', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('is_complete', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['videos.TranslationLanguage'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
         ))
         db.send_create_signal('videos', ['TranslationVersion'])
 
@@ -197,7 +196,6 @@ class Migration(SchemaMigration):
         },
         'videos.translationversion': {
             'Meta': {'object_name': 'TranslationVersion'},
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_complete': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['videos.TranslationLanguage']"}),
