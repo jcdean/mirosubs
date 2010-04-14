@@ -23,13 +23,15 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     #('your_name', 'your_email@domain.com'),
+     #('your_name', 'email@domain.com'),
 )
 
 MANAGERS = ADMINS
 
+ROOT = lambda base : os.path.join(os.path.dirname(__file__), base).replace('\\','/')
+
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'mirosubs.sqlite3'    # Or path to database file if using sqlite3.
+DATABASE_NAME = ROOT('mirosubs.sqlite3')    # Or path to database file if using sqlite3.
 DATABASE_USER = ''                    # Not used with sqlite3.
 DATABASE_PASSWORD = ''                # Not used with sqlite3.
 DATABASE_HOST = ''                    # Set to empty string for localhost. Not used with sqlite3.

@@ -24,9 +24,13 @@ from django.template import RequestContext
 from django.views.generic.list_detail import object_list
 from videos.forms import VideoForm
 from videos.models import Video, VIDEO_TYPE_YOUTUBE, VIDEO_TYPE_HTML5
+from videos.models import VideoCaptionVersion, TranslationVersion
+
 import widget
+
 from urlparse import urlparse, parse_qs
 from django.contrib.sites.models import Site
+
 
 def create(request):
     if request.method == 'POST':
@@ -37,6 +41,7 @@ def create(request):
             if 'youtube.com' in parsed_url.netloc:
                 yt_video_id = parse_qs(parsed_url.query)['v'][0]
                 video, created = Video.objects.get_or_create(
+				    video_url=video_form.cleaned_data['video_url'],
                                     youtube_videoid=yt_video_id,
                                     defaults={'owner': owner,
                                               'video_type': VIDEO_TYPE_YOUTUBE})
@@ -74,8 +79,22 @@ def video_list(request):
         page = int(request.GET['page'])
     except (ValueError, TypeError, KeyError):
         page = 1
+
     qs = Video.objects.all()
+    translations = TranslationVersion.objects.filter(video__in=qs)
+
     return object_list(request, queryset=qs, allow_empty=True,
                        paginate_by=50, page=page,
                        template_name='videos/video_list.html',
-                       template_object_name='video')
+                       template_object_name='video', extra_context={"translations" : len(translations)})
+
+def recent_activity(request, template_name='index.html'):
+	DATE_ADDED_DESCENDING = '-datetime_started'
+
+	vidcaps = list(VideoCaptionVersion.objects.all().order_by(DATE_ADDED_DESCENDING))
+	trans = list(TranslationVersion.objects.all().order_by(DATE_ADDED_DESCENDING))
+
+	most_recent = sorted(vidcaps + trans, key=lambda x: x.datetime_started, reverse=True)  # in descending order
+
+	return render_to_response(template_name, {'most_recent' : most_recent},
+                              context_instance=RequestContext(request))

@@ -28,8 +28,9 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    (r'^$', 'django.views.generic.simple.direct_to_template', 
-     {'template': 'index.html'}),
+    #(r'^$', 'django.views.generic.simple.direct_to_template', 
+    # {'template': 'index.html'}),
+    url(r'^$', 'videos.views.recent_activity', name='home'),#{'template': 'index.html'}),
     url(r'^logout/', 'django.contrib.auth.views.logout', name='logout', 
         kwargs={'next_page': '/'}),
     url(r'^admin/password_reset/$', 
